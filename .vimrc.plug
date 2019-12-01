@@ -1,0 +1,61 @@
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Automatically install missing plugins on install "
+autocmd VimEnter *
+	\ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+	\| 	PlugInstall --sync | q
+	\| endif
+
+silent! if plug#begin('~/.vim/plugged')
+
+" Fugitive vim github wrapper "
+Plug 'tpope/vim-fugitive'
+
+" directory and file movement within vim "
+Plug 'scrooloose/nerdtree'
+
+" syntax-aware easy commenting (toggles line as comment or not) "
+" gc and tcomment_vim comments/uncomments the highlighted line "
+Plug 'tomtom/tcomment_vim'
+
+" Shows signs for line additions (+), modifications (~), or removals (-) " 
+" if the file is in a git repo "
+Plug 'airblade/vim-gitgutter'
+
+" Provides visual indicators of the indent level of each line in a file "
+" Customized plugin to show single character wide highlights "
+Plug 'Yggdroot/indentLine'
+let g:indentLine_char = '|'
+let g:indentLine_color_term = 239
+let g:indentLines_bgcolor_term = 180 
+let g:indentLine_conceallevel = 2
+let g:indentLine_enable = 1
+let g:indentLines_setConceal = 0
+
+" Fuzzy file and buffer finder that shows above vim status bar when searching
+" for more files to edit "
+Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_buffer_func = {'enter':'BrightHighlightOn', 'exit':'BrightHighlightOff',}
+
+function BrightHighlightOn()
+	hi CursorLine guibg=yellow
+endfunction
+
+function BrightHighlightOff()
+	hi CursorLine guibg=#191919
+endfunction
+
+Plug 'rafi/awesome-vim-colorschemes'
+
+" Python autocomplete plugin "
+Plug 'Valloric/YouCompleteMe'
+
+" Zoom in/out individual windows "
+Plug 'dhruvasagar/vim-zoom'
+
+call plug#end()
+endif

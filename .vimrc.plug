@@ -4,13 +4,31 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 " Automatically install missing plugins on install "
 autocmd VimEnter *
 	\ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 	\| 	PlugInstall --sync | q
 	\| endif
 
-silent! if plug#begin('~/.vim/plugged')
+silent! if plug#begin('~/.vim/plugged')i
+
+" Autocomplete for C/C++ "
+" Plug 'xavierd/clang_complete'
+" let g:clang_library_path='/user/lib/llvm-3.8/lib'
+Plug 'Valloric/YouCompleteMe'
+let g:completefunc=youcompleteme#Complete
+let g:ycm_key_invoke_completion = ''
+inoremap <C-@> <C-X><C-U>
+
+" Project/Session "
+" :mksession -> creates a session with all the open files "
+Plug 'tpope/vim-obsession'
+
+" Project/Session continued "
+" :Prosession provides  existing session paths from the sessions directory "
+" :help prosession "
+Plug 'dhruvasagar/vim-prosession'
 
 " Fugitive vim github wrapper "
 Plug 'tpope/vim-fugitive'
@@ -52,7 +70,7 @@ endfunction
 Plug 'rafi/awesome-vim-colorschemes'
 
 " Python autocomplete plugin "
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 
 " Zoom in/out individual windows "
 Plug 'dhruvasagar/vim-zoom'
